@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Student Chat ログイン</h2>
+
+        <!-- エラー表示 -->
+        <?php if (isset($_GET["error"])): ?>
+            <p class="error">ユーザー名を入力してください。</p>
+        <?php endif; ?>
+
+        <form action="login.php" method="POST" id="login-form">
+            <input type="text" name="username" id="username" placeholder="ユーザー名" required>
+            <button type="submit">ログイン</button>
+        </form>
+
+        <p class="note">※シンプルなテスト版ログインです</p>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>
