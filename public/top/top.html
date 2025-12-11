@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ホーム</title>
+    <link rel="stylesheet" href="../public/css/top.css">
+    <script src="../public/js/top.js" defer></script>
+</head>
+<body>
+
+    <!-- 右上：アカウント -->
+    <header>
+        <div class="account-area">
+            <a href="account.html">アカウント</a>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- 左側：チャット一覧 -->
+        <aside class="sidebar">
+
+            <button id="create-chat-btn" class="create-btn">＋ チャット作成</button>
+
+            <ul id="chat-list" class="chat-list">
+                <!-- JS が埋め込む -->
+            </ul>
+
+        </aside>
+
+        <!-- 右側：メイン領域 -->
+        <main class="main-area">
+            <h2>ホーム</h2>
+            <p>左からチャットを選択するか、作成してください。</p>
+        </main>
+
+    </div>
+
+</body>
+</html>

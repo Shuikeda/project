@@ -1,0 +1,23 @@
+body {
+    font-family: sans-serif;
+    padding: 20px;
+}
+
+.form-box {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+}
+
+#chat-name {
+    padding: 8px;
+    font-size: 16px;
+}
+
+#create-btn {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
