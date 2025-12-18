@@ -60,3 +60,12 @@ router.post("/create", auth, (req, res) => {
         message: "チャットを作成しました"
     });
 });
+
+async function getUserRole(chatId, userId) {
+    const row = await db.get(
+        "SELECT role FROM chat_members WHERE chat_id=? AND user_id=?",
+        [chatId, userId]
+    );
+    return row ? row.role : null;
+}
+

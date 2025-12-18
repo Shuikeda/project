@@ -1,28 +1,67 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("createChatForm");
-    const message = document.getElementById("message");
 
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+    const params = new URLSearchParams(location.search);
+    const chatId = params.get("id");
+    if (!chatId) return;
 
-        const chatName = document.getElementById("chatName").value;
+    const token = localStorage.getItem("token");
+    const messagesDiv = document.getElementById("messages");
+    const input = document.getElementById("message-input");
+    const sendBtn = document.getElementById("send-btn");
 
-        // PHPに送信
-        const res = await fetch("chat_create.php", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: `chatName=${encodeURIComponent(chatName)}`
-        });
+    // 過去メッセージ
+    fetch(`/api/messages/${chatId}`, {
+        headers: { Authorization: "Bearer " + token }
+    })
+    .then(res => res.json())
+    .then(data => {
+        data.messages.forEach(addMessage);
+    });
 
-        const text = await res.text();
+    // WebSocket
+    const ws = new WebSocket(`ws://localhost:3000?token=${token}`);
 
-        if (text === "OK") {
-            message.textContent = "チャットを作成しました。TOPに戻ります…";
-            setTimeout(() => {
-                window.location.href = "top.html";
-            }, 1200);
-        } else {
-            message.textContent = "エラー: " + text;
+    ws.onmessage = (e) => {
+        const msg = JSON.parse(e.data);
+        addMessage(msg);
+    };
+
+    sendBtn.onclick = () => {
+        if (!input.value) return;
+
+        ws.send(JSON.stringify({
+            chatId,
+            content: input.value
+        }));
+
+        input.value = "";
+    };
+
+    function addMessage(msg) {
+        const div = document.createElement("div");
+        div.textContent = `${msg.username}: ${msg.content}`;
+        messagesDiv.appendChild(div);
+    }
+});
+
+fetch(`/api/chats/${chatId}/members`, {
+    headers: { Authorization: "Bearer " + token }
+})
+.then(res => res.json())
+.then(data => {
+    const panel = document.getElementById("member-panel");
+
+    data.members.forEach(m => {
+        const div = document.createElement("div");
+        div.textContent = `${m.username} (${m.role})`;
+
+        if (myRole === "owner" && m.role === "member") {
+            const btn = document.createElement("button");
+            btn.textContent = "管理者にする";
+            btn.onclick = () => setAdmin(m.id);
+            div.appendChild(btn);
         }
+
+        panel.appendChild(div);
     });
 });

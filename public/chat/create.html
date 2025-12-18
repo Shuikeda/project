@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>チャット作成</title>
-    <link rel="stylesheet" href="create.css">
-    <script src="create.js" defer></script>
+    <link rel="stylesheet" href="./chat.css">
 </head>
 <body>
 
-    <h2>チャットを作成</h2>
+    <div class="container">
+        <h2>チャットを作成</h2>
 
-    <div class="form-box">
-        <label>チャット名</label>
-        <input type="text" id="chat-name" placeholder="グループ名を入力">
+        <form id="createChatForm">
+            <label for="chatName">チャット名</label>
+            <input type="text" id="chatName" required>
 
-        <button id="create-btn">作成</button>
+            <button type="submit">作成</button>
+        </form>
+
+        <p id="message"></p>
     </div>
 
+    <script src="./create.js"></script>
 </body>
 </html>

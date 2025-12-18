@@ -1,31 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("createChatForm");
+    if (!form) return;
 
-    const createBtn = document.getElementById("create-btn");
+    const message = document.getElementById("message");
 
-    createBtn.addEventListener("click", () => {
-        const name = document.getElementById("chat-name").value;
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-        if (!name) {
-            alert("チャット名を入力してください");
-            return;
-        }
+        const chatName = document.getElementById("chatName").value;
 
-        fetch("/api/chats/create", {
+        const res = await fetch("/api/chats", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token")
             },
-            body: JSON.stringify({ name })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                alert("チャットを作成しました！");
-                window.location.href = `/chat/chat.html?id=${data.chatId}`;
-            } else {
-                alert("作成に失敗しました");
-            }
+            body: JSON.stringify({ name: chatName })
         });
-    });
 
+        const data = await res.json();
+
+        if (data.success) {
+            message.textContent = "チャットを作成しました";
+            setTimeout(() => {
+                location.href = "/top/top.html";
+            }, 1200);
+        } else {
+            message.textContent = data.error;
+        }
+    });
 });
