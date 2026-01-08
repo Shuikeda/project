@@ -3,26 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>チャット作成</title>
-    <link rel="stylesheet" href="../chat/chat.css">
+    <title>チャット</title>
+    <link rel="stylesheet" href="./chat.css">
 </head>
 <body>
 
-    <div class="container">
-        <h2>チャットを作成</h2>
+<div class="chat-wrapper">
 
-        <form id="createChatForm">
-            <label for="chatName">チャット名</label>
-            <input type="text" id="chatName" name="chatName" required>
+    <!-- メンバー一覧 -->
+    <aside id="member-panel" class="members"></aside>
 
-            <button type="submit">作成</button>
-        </form>
+    <!-- メイン -->
+    <main class="chat-main">
+        <div id="messages" class="messages"></div>
 
-        <p id="message"></p>
-    </div>
+        <div class="input-area">
+            <input id="message-input" type="text" placeholder="メッセージを入力">
+            <button id="send-btn">送信</button>
+        </div>
+    </main>
 
-    <div id="member-panel"></div>
+</div>
 
-    <script src="../chat/chat.js"></script>
+<script src="./chat.js"></script>
 </body>
 </html>
+
